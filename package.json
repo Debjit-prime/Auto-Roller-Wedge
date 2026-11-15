@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "npm --prefix web run dev",
-    "build": "npm --prefix web run build",
+    "build": "npm --prefix web run build && mkdir -p docs && cp -R web/dist/* docs/",
     "test": "npm --prefix web run test",
     "preview": "npm --prefix web run preview"
   },
