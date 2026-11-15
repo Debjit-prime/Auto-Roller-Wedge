@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #F7F8F5;
+  --color-card: #FFFFFF;
+  --color-border: #D9E1DC;
+  --color-border-subtle: #E6ECE8;
+  --color-primary: #16322F;
+  --color-primary-hover: #1F433F;
+  --color-secondary: #4A6460;
+  --color-muted: #8A9C98;
+  --color-sunken: #EEF2EF;
+  --color-accent-gold: #C9A24B;
+  --color-gold-text: #8A6A1F;
+  --color-success: #1F8A5B;
+  --color-warning: #C77A12;
+  --color-danger: #C73A32;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-slab: 'Roboto Slab', serif;
+  --font-script: 'Dancing Script', cursive;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F7F8F5;
+  color: #16322F;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.card-shadow {
+  box-shadow: 0 1px 3px rgba(22, 50, 47, 0.04), 0 1px 2px rgba(22, 50, 47, 0.02);
+}
+
+.card-shadow-elevated {
+  box-shadow: 0 4px 12px rgba(22, 50, 47, 0.06), 0 1px 3px rgba(22, 50, 47, 0.04);
+}
+
+.modal-shadow {
+  box-shadow: 0 12px 28px rgba(22, 50, 47, 0.12);
+}
+
+/* Accessible focus styling */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #C9A24B;
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

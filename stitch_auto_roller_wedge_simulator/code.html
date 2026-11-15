@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Playfair+Display:wght@600;700&amp;family=Roboto+Slab:wght@700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"base-green":"#16322F","base-dark":"#16322F","primary":"#16322F","accent-gold":"#C9A24B","gold-text":"#8A6A1F","mint":"#1F8A5B","amber-warm":"#C77A12","slip-red":"#C73A32","card-bg":"#FFFFFF","border-light":"#D9E1DC","sunken":"#EEF2EF","secondary-text":"#4A6460","muted-text":"#8A9C98"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xs":"0.25rem","margin-desktop":"2rem","space-2xl":"3rem","space-md":"1rem","space-lg":"1.5rem","margin":"1rem","space-sm":"0.5rem","gutter-desktop":"1.5rem","space-xl":"2rem","gutter":"1rem"},"fontFamily":{"serif-title":["'Playfair Display'","serif"],"slab":["'Roboto Slab'","serif"],"script":["'Dancing Script'","cursive"],"mono":["'JetBrains Mono'","monospace"],"sans":["'Inter'","sans-serif"],"body-md":["'Inter'","sans-serif"],"headline-lg":["'Playfair Display'","serif"],"headline-md":["'Playfair Display'","serif"]}}}}</script>
+<style>
+  body {
+    background-color: #F7F8F5;
+    color: #16322F;
+    font-family: 'Inter', sans-serif;
+  }
+  .card-shadow {
+    box-shadow: 0 2px 8px rgba(22, 50, 47, 0.08);
+  }
+  .sim-grid-canvas {
+    background-color: #FFFFFF;
+    background-image: linear-gradient(to right, #E6ECE8 1px, transparent 1px), linear-gradient(to bottom, #E6ECE8 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+  .label-tracking {
+    letter-spacing: 0.14em;
+  }
+</style>
+</head><body class="bg-[#F7F8F5] font-sans text-[#16322F] antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-[#FFFFFF] border-b border-[#D9E1DC] card-shadow"><div class="h-16 w-full px-space-md flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md shrink-0"><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="text-[11px] font-sans text-[#8A6A1F] label-tracking uppercase font-bold">APEX INSTRUMENTS</span><span class="text-[#8A9C98] font-mono text-[11px]">/</span><span class="text-[11px] font-sans text-[#4A6460] label-tracking uppercase font-semibold">PHYSICS LAB</span></div><span class="font-serif-title text-[18px] text-[#16322F] tracking-tight font-bold">Auto-Roller Wedge Live Simulator</span></div><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded bg-[#EEF2EF] border border-[#D9E1DC]"><div class="w-2 h-2 rounded-full bg-[#1F8A5B] shadow-[0_0_6px_rgba(31,138,91,0.5)] animate-pulse"></div><span class="font-mono text-[12px] tabular-nums text-[#16322F]">192.168.4.105</span><span class="font-mono text-[12px] tabular-nums text-[#1F8A5B] font-semibold">24ms</span></div><div class="hidden 2xl:flex items-center gap-1.5 px-space-sm py-1 rounded bg-[#EEF2EF] border border-[#D9E1DC]"><span class="material-symbols-outlined text-[14px] text-[#8A6A1F]">sync</span><span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase">LAST PKT:</span><span class="font-mono text-[12px] tabular-nums text-[#8A6A1F] font-semibold">12ms</span></div><span class="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-sans text-[11px] label-tracking uppercase font-bold"><span class="w-1.5 h-1.5 rounded-full bg-[#1F8A5B] animate-ping"></span>RUNNING</span></div><div class="flex items-center gap-space-sm shrink-0">
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F]/30 transition-colors text-[#16322F] font-sans text-[12px] font-semibold" type="button"><span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">labs</span><span class="hidden sm:inline">DEMO</span></button><button class="p-1.5 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F]/30 transition-colors text-[#4A6460] hover:text-[#16322F]" type="button"><span class="material-symbols-outlined text-[18px]">volume_up</span></button><div class="hidden md:flex items-center bg-[#EEF2EF] border border-[#D9E1DC] rounded p-0.5"><button class="p-1.5 rounded bg-[#FFFFFF] text-[#16322F] shadow-xs" title="Desktop View" type="button"><span class="material-symbols-outlined text-[16px]">desktop_windows</span></button><button class="p-1.5 rounded text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF]" title="Tablet View" type="button"><span class="material-symbols-outlined text-[16px]">tablet</span></button><button class="p-1.5 rounded text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF]" title="Mobile View" type="button"><span class="material-symbols-outlined text-[16px]">smartphone</span></button></div><button class="flex items-center gap-1 px-space-md py-1.5 rounded bg-[#16322F] hover:bg-[#204440] text-white active:bg-[#0e211f] font-sans text-[12px] font-bold uppercase transition-all card-shadow border-b-2 border-[#C9A24B]" onclick="resetFullTest()" type="button"><span class="material-symbols-outlined text-[16px] text-[#C9A24B]">restart_alt</span><span>RESET</span></button><div class="w-8 h-8 rounded-full bg-[#EEF2EF] border border-[#16322F] flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-[#16322F] text-[18px]">person</span></div></div></div></header><aside class="fixed left-0 top-16 bottom-0 w-64 bg-[#FFFFFF] border-r border-[#D9E1DC] z-40 flex flex-col justify-between p-space-md card-shadow"><div class="flex flex-col gap-space-lg"><div class="px-space-sm pt-space-xs"><span class="font-serif-title text-[14px] text-[#16322F] font-bold tracking-normal uppercase">BENCH NAVIGATION</span></div><nav class="flex flex-col gap-1"><a aria-current="page" class="flex items-center gap-3 px-space-md py-2.5 rounded transition-colors bg-[#EEF2EF] border-l-4 border-[#16322F] text-[#16322F] font-sans font-semibold text-[13px]" data-path="live-simulation" href="#"><span class="material-symbols-outlined text-[18px] text-[#16322F]">motion_mode</span><span>Live Simulation</span></a><a class="flex items-center gap-3 px-space-md py-2.5 rounded text-[#4A6460] hover:bg-[#EEF2EF] hover:text-[#16322F] transition-colors font-sans text-[13px] font-medium" data-path="telemetry-logs" href="#"><span class="material-symbols-outlined text-[18px]">ssid_chart</span><span>Telemetry &amp; Logs</span></a><a class="flex items-center gap-3 px-space-md py-2.5 rounded text-[#4A6460] hover:bg-[#EEF2EF] hover:text-[#16322F] transition-colors font-sans text-[13px] font-medium" data-path="hardware-bench-config" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span>Bench Config</span></a><a class="flex items-center gap-3 px-space-md py-2.5 rounded text-[#4A6460] hover:bg-[#EEF2EF] hover:text-[#16322F] transition-colors font-sans text-[13px] font-medium" data-path="slip-event-analytics" href="#"><span class="material-symbols-outlined text-[18px]">warning</span><span>Slip Analytics</span></a><a class="flex items-center gap-3 px-space-md py-2.5 rounded text-[#4A6460] hover:bg-[#EEF2EF] hover:text-[#16322F] transition-colors font-sans text-[13px] font-medium" data-path="calibration-zeroing" href="#"><span class="material-symbols-outlined text-[18px]">straighten</span><span>Calibration</span></a></nav></div><div class="p-space-sm rounded bg-[#EEF2EF] border border-[#D9E1DC] flex flex-col gap-space-xs"><div class="flex items-center justify-between font-sans label-tracking text-[#4A6460]"><span class="text-[11px] font-bold uppercase">SLIP CRITICAL</span><span class="text-[#C73A32] text-[11px] font-bold uppercase">ARMED</span></div><div class="h-1.5 w-full bg-[#D9E1DC] rounded overflow-hidden"><div class="h-full bg-[#1F8A5B] w-3/4"></div></div><span class="text-[11px] font-mono tabular-nums text-[#8A9C98]">SENSORS: 4/4 SYNCED</span></div></aside><div class="pl-64"><main class="w-full pt-16 bg-[#F7F8F5] min-h-screen"><div class="flex flex-col w-full">
+<!-- Mode Switcher & Teacher Navigation Deck -->
+<div class="w-full bg-[#FFFFFF] border-b border-[#D9E1DC] px-space-lg py-space-sm flex flex-wrap items-center justify-between gap-space-md card-shadow">
+<div class="flex items-center gap-space-sm">
+<div class="p-1.5 rounded bg-[#EEF2EF] border border-[#D9E1DC] text-[#16322F] flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">science</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-serif-title text-[15px] text-[#8A6A1F] font-bold uppercase">LAB INSTRUMENTATION CONSOLE</span>
+<span class="px-1.5 py-0.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] text-[11px] font-mono tabular-nums font-bold uppercase">PHYS-304 RIG #2</span>
+</div>
+<div class="flex items-center gap-2">
+<p class="font-sans text-[13px] text-[#4A6460]">Inclined Plane Automated Repose Angle &amp; Static Friction Bench</p>
+<span class="hidden md:inline text-[#8A9C98]">·</span>
+<span class="hidden md:inline font-script text-[24px] text-[#8A6A1F] leading-none select-none">“Precision repose measurement in motion”</span>
+</div>
+</div>
+</div>
+<!-- Active Tab Switcher -->
+<div class="flex items-center bg-[#EEF2EF] border border-[#D9E1DC] p-1 rounded gap-1 overflow-x-auto">
+<button class="px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 bg-[#16322F] text-white card-shadow transition-all" id="tabBtn1" onclick="switchMainTab('live')">
+<span class="material-symbols-outlined text-[16px] text-[#C9A24B]">play_circle</span>
+<span>1. LIVE SIMULATION</span>
+</button>
+<button class="px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF] transition-all" id="tabBtn2" onclick="switchMainTab('network')">
+<span class="material-symbols-outlined text-[16px]">settings_ethernet</span>
+<span>2. IP / HARDWARE CONFIG</span>
+</button>
+<button class="px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF] transition-all" id="tabBtn3" onclick="switchMainTab('states')">
+<span class="material-symbols-outlined text-[16px]">layers</span>
+<span>3. ALL RIG STATES</span>
+</button>
+<button class="px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF] transition-all" id="tabBtn4" onclick="switchMainTab('specs')">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>4. SPEC &amp; REDLINES</span>
+</button>
+</div>
+</div>
+<!-- Global Telemetry Status Bar -->
+<div class="w-full bg-[#FFFFFF] border-b border-[#D9E1DC] px-space-lg py-space-sm flex flex-wrap items-center justify-between gap-space-md">
+<!-- Hardware Link Nodes -->
+<div class="flex items-center flex-wrap gap-space-lg">
+<div class="flex items-center gap-space-sm">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1F8A5B] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#1F8A5B]"></span>
+</span>
+<div class="flex flex-col">
+<span class="font-sans text-[12px] text-[#16322F] font-bold">Arduino UNO R4 WiFi</span>
+<span class="font-mono tabular-nums text-[11px] text-[#4A6460]">IP: 192.168.4.105:8080 (WS Live)</span>
+</div>
+</div>
+<div class="hidden sm:flex items-center gap-space-md">
+<div class="flex flex-col">
+<span class="font-sans text-[11px] label-tracking text-[#8A9C98] uppercase font-semibold">Wi-Fi RSSI</span>
+<span class="font-mono tabular-nums text-[12px] text-[#1F8A5B] font-semibold">-48 dBm (Strong)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-sans text-[11px] label-tracking text-[#8A9C98] uppercase font-semibold">Sampling</span>
+<span class="font-mono tabular-nums text-[12px] text-[#16322F] font-medium">60 Hz / <span class="text-[#8A6A1F] font-semibold">12ms</span> Latency</span>
+</div>
+<div class="flex flex-col">
+<span class="font-sans text-[11px] label-tracking text-[#8A9C98] uppercase font-semibold">Packets RX</span>
+<span class="font-mono tabular-nums text-[12px] text-[#16322F] font-medium" id="packetCounter">4,892 pkts</span>
+</div>
+</div>
+</div>
+<!-- Visual Bench Experiment State Stepper -->
+<div class="flex items-center bg-[#EEF2EF] border border-[#D9E1DC] p-1 rounded gap-1">
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded font-sans text-[11px] text-[#8A9C98]" id="stepReset">
+<span class="w-2 h-2 rounded-full bg-[#8A9C98]"></span>
+<span>01. RESETTING</span>
+</div>
+<span class="text-[#8A9C98] font-mono text-[11px]">›</span>
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded font-sans text-[11px] text-[#8A9C98]" id="stepPlace">
+<span class="w-2 h-2 rounded-full bg-[#8A9C98]"></span>
+<span>02. PLACE BLOCK</span>
+</div>
+<span class="text-[#8A9C98] font-mono text-[11px]">›</span>
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded font-sans text-[11px] text-[#16322F]" id="stepRunning">
+<span class="w-2 h-2 rounded-full bg-[#8A6A1F] animate-pulse"></span>
+<span class="font-bold">03. RUNNING</span>
+</div>
+<span class="text-[#8A9C98] font-mono text-[11px]">›</span>
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded font-sans text-[11px] bg-[rgba(199,58,50,0.12)] border border-[#C73A32]/40 text-[#C73A32] font-bold card-shadow" id="stepSlipped">
+<span class="w-2 h-2 rounded-full bg-[#C73A32] animate-pulse"></span>
+<span>04. SLIP TRIGGERED</span>
+</div>
+</div>
+</div>
+<!-- TAB 1: MAIN LIVE SIMULATION DASHBOARD -->
+<div class="w-full p-space-md lg:p-space-lg flex flex-col gap-space-lg" id="panelLive">
+<!-- Top Action Bar & Quick Experiment Triggers -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-[#FFFFFF] border border-[#D9E1DC] p-space-md rounded card-shadow">
+<div class="flex items-center gap-space-md flex-wrap">
+<div class="flex items-center gap-2">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">Active Material:</span>
+<span class="px-2 py-1 rounded bg-[#EEF2EF] border border-[#D9E1DC] text-[#16322F] font-sans text-[12px] font-semibold">Hardwood On Sanded Pine (P120)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">Wedge Lift Rate:</span>
+<span class="px-2 py-1 rounded bg-[#EEF2EF] border border-[#D9E1DC] text-[#8A6A1F] font-mono tabular-nums text-[12px] font-bold">+1.00 deg/s</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">Slip Sensitivity (Δd):</span>
+<span class="px-2 py-1 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-mono tabular-nums text-[12px] font-bold">≥ 10.0 mm</span>
+</div>
+</div>
+<!-- Live Interactive Controls -->
+<div class="flex items-center gap-space-sm">
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F] text-[#16322F] font-sans text-[12px] transition-colors font-semibold" id="btnVectors" onclick="toggleVectors()">
+<span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">arrow_forward</span>
+<span>Vectors Overlay: <strong class="text-[#1F8A5B]" id="lblVectors">ON</strong></span>
+</button>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F] text-[#16322F] font-sans text-[12px] font-semibold card-shadow transition-all" onclick="triggerDemoSlip()">
+<span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">touch_app</span>
+<span>TRIGGER DEMO SLIP</span>
+</button>
+<button class="flex items-center gap-2 px-space-lg py-2 rounded bg-[#16322F] hover:bg-[#204440] active:bg-[#0e211f] text-white font-sans text-[12px] font-bold uppercase card-shadow border-b-2 border-[#C9A24B] active:scale-95 transition-all" id="btnResetMain" onclick="resetFullTest()">
+<span class="material-symbols-outlined text-[18px] text-[#C9A24B]">restart_alt</span>
+<span>RESET BENCH (0°)</span>
+</button>
+</div>
+</div>
+<!-- MAIN BIFURCATED GRID: Hero 2D Canvas (60%) & Right Telemetry Column (40%) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- HERO 2D SIMULATION VIEWPORT (7 Cols on desktop) -->
+<div class="xl:col-span-7 flex flex-col gap-space-md">
+<!-- Canvas Stage Card -->
+<div class="relative bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-md card-shadow overflow-hidden flex flex-col">
+<!-- Viewport Header Info -->
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs text-[#16322F]">
+<span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">grid_4x4</span>
+<span class="font-serif-title text-[15px] font-bold uppercase tracking-normal">CALIBRATED BENCH AXES [SCALE 1:2.5]</span>
+</div>
+<div class="flex items-center gap-space-md text-[11px] font-mono tabular-nums">
+<span class="text-[#4A6460]">HC-SR04 PULSE: <span class="text-[#1F8A5B] font-bold">40 kHz BURST</span></span>
+<span class="text-[#4A6460]">PIVOT COORD: <span class="text-[#16322F] font-semibold">X:90, Y:390</span></span>
+</div>
+</div>
+<!-- THE HIGH-FIDELITY LABORATORY SVG STAGE -->
+<div class="relative w-full h-[450px] sim-grid-canvas border border-[#D9E1DC] rounded flex items-center justify-center select-none overflow-hidden">
+<svg class="w-full h-full" id="simSvg" viewbox="0 0 760 480">
+<defs>
+<!-- Clean Test Block Body with Gold Border -->
+<lineargradient id="blockGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#FFFFFF"></stop>
+<stop offset="100%" stop-color="#F7F8F5"></stop>
+</lineargradient>
+<!-- Vector Arrow Markers in strict palette -->
+<marker id="arrowMint" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M 1 1 L 7 4 L 1 7 Z" fill="#1F8A5B"></path>
+</marker>
+<marker id="arrowGold" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M 1 1 L 7 4 L 1 7 Z" fill="#C9A24B"></path>
+</marker>
+<marker id="arrowAmber" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M 1 1 L 7 4 L 1 7 Z" fill="#C77A12"></path>
+</marker>
+<marker id="arrowRed" markerheight="8" markerwidth="8" orient="auto" refx="6" refy="4">
+<path d="M 1 1 L 7 4 L 1 7 Z" fill="#C73A32"></path>
+</marker>
+</defs>
+<!-- Angular Reference Arc Guidelines radiating from Pivot (90, 390) -->
+<g stroke="#D9E1DC" stroke-dasharray="4,4" stroke-width="1.2">
+<line x1="90" x2="680" y1="390" y2="390"></line> <!-- 0 deg -->
+<line x1="90" x2="660" y1="390" y2="237"></line> <!-- 15 deg -->
+<line x1="90" x2="600" y1="390" y2="95"></line> <!-- 30 deg -->
+<line x1="90" x2="490" y1="390" y2="-10"></line> <!-- 45 deg -->
+<!-- Arc Sector 0-45 -->
+<path d="M 290 390 A 200 200 0 0 0 231 248" fill="none" stroke="#D9E1DC" stroke-width="1.5"></path>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" font-weight="600" x="670" y="385">0° HORIZONTAL</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" font-weight="600" x="645" y="230">15°</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" font-weight="600" x="590" y="90">30°</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" font-weight="600" x="475" y="30">45°</text>
+</g>
+<!-- Heavy Cast-Iron Bench Rig Stand (Base in Deep Forest Green #16322F) -->
+<g id="benchBase">
+<rect fill="#16322F" height="42" rx="2" stroke="#0E211F" stroke-width="1.5" width="670" x="50" y="390"></rect>
+<line stroke="#C9A24B" stroke-width="2" x1="50" x2="720" y1="390" y2="390"></line>
+<!-- Feet Dampers -->
+<rect fill="#EEF2EF" height="12" rx="2" stroke="#16322F" stroke-width="1.5" width="40" x="70" y="432"></rect>
+<rect fill="#EEF2EF" height="12" rx="2" stroke="#16322F" stroke-width="1.5" width="40" x="660" y="432"></rect>
+<!-- Level Bubble Indicator on Base -->
+<rect fill="#EEF2EF" height="14" rx="7" stroke="#C9A24B" stroke-width="1.5" width="80" x="340" y="405"></rect>
+<circle cx="380" cy="412" fill="#1F8A5B" opacity="0.9" r="4"></circle>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="344" y="430">LEVEL: 0.00°</text>
+</g>
+<!-- Dual High-Torque Servo Motor Actuator Assembly in Deep Forest Green with Gold Accents -->
+<g id="servoActuator" transform="translate(60, 310)">
+<rect fill="#16322F" height="74" rx="3" stroke="#C9A24B" stroke-width="2" width="56" x="0" y="0"></rect>
+<rect fill="#EEF2EF" height="14" rx="1" width="48" x="4" y="6"></rect>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="6" y="17">MG996R</text>
+<!-- Spline Shaft Hub -->
+<circle cx="28" cy="45" fill="#EEF2EF" r="16" stroke="#C9A24B" stroke-width="2"></circle>
+<circle cx="28" cy="45" fill="#16322F" r="7"></circle>
+<!-- Linkage Rod to plank underside -->
+<line id="linkRod" stroke="#C9A24B" stroke-linecap="round" stroke-width="3" x1="28" x2="60" y1="35" y2="70"></line>
+</g>
+<!-- Dynamic Protractor Arc at Pivot (theta sector in Muted Gold) -->
+<g id="protractorSector">
+<path d="M 190 390 A 100 100 0 0 0 178 344 L 90 390 Z" fill="rgba(201, 162, 75, 0.25)" id="angleArcPath" stroke="#C9A24B" stroke-width="2"></path>
+<text fill="#8A6A1F" font-family="JetBrains Mono" font-size="12" font-weight="bold" id="svgAngleText" x="140" y="375">27.4°</text>
+</g>
+<!-- Pivot Hinge Pin in Deep Green and Gold -->
+<circle cx="90" cy="390" fill="#16322F" r="12" stroke="#C9A24B" stroke-width="2.5"></circle>
+<circle cx="90" cy="390" fill="#C9A24B" r="4"></circle>
+<!-- ROTATING PLANK GROUP (Rotates dynamically around 90, 390) -->
+<g id="rotatingPlank" transform="rotate(-27.4, 90, 390)">
+<!-- Main Wedge Plank: Deep Forest Green #16322F, clean 8px-thick profile -->
+<rect fill="#16322F" height="14" rx="2" stroke="#0E211F" stroke-width="2" width="540" x="90" y="380"></rect>
+<!-- Millimeter Scale Ticks on plank upper surface in Gold -->
+<path d="M 110 380 L 110 375 M 160 380 L 160 373 M 210 380 L 210 375 M 260 380 L 260 373 M 310 380 L 310 375 M 360 380 L 360 373 M 410 380 L 410 375 M 460 380 L 460 373 M 510 380 L 510 375 M 560 380 L 560 373 M 610 380 L 610 375" stroke="#C9A24B" stroke-width="1.2"></path>
+<!-- HC-SR04 Ultrasonic Sensor Mount in Deep Green & Gold -->
+<g id="ultrasonicSensor" transform="translate(100, 350)">
+<!-- PCB Mounting Board -->
+<rect fill="#EEF2EF" height="24" rx="1.5" stroke="#16322F" stroke-width="1.5" width="30" x="0" y="6"></rect>
+<!-- Dual Transducer Barrels -->
+<rect fill="#FFFFFF" height="7" rx="1" stroke="#C9A24B" stroke-width="1.2" width="18" x="6" y="0"></rect>
+<circle cx="15" cy="3.5" fill="#16322F" r="2"></circle>
+<!-- Sensor label -->
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="2" y="24">SR04</text>
+<!-- Sound wave arcs (Muted Gold) -->
+<path class="animate-pulse" d="M 32 4 A 12 12 0 0 1 32 20 M 40 0 A 18 18 0 0 1 40 24 M 48 -4 A 26 26 0 0 1 48 28" fill="none" id="soundWaves" opacity="0.8" stroke="#C9A24B" stroke-width="1.5"></path>
+</g>
+<!-- Calibrated Test Block: Crisp White body with deep green stroke & gold accent -->
+<g id="testBlock" transform="translate(282.4, 336)">
+<!-- Block Body -->
+<rect fill="url(#blockGrad)" height="44" rx="2" stroke="#16322F" stroke-width="2" width="65" x="0" y="0"></rect>
+<!-- Specimen Calibration Label -->
+<rect fill="#EEF2EF" height="28" rx="1" stroke="#D9E1DC" width="49" x="8" y="8"></rect>
+<text fill="#8A6A1F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="11" y="22">150g</text>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="600" x="11" y="33">PINE</text>
+<!-- High-contrast acoustic reflector tape on front face in gold -->
+<rect fill="#C9A24B" height="44" width="3" x="0" y="0"></rect>
+<!-- Slip indicator motion lines (warm muted red when slipped) -->
+<g class="block" id="slipMotionLines">
+<line stroke="#C73A32" stroke-dasharray="2,2" stroke-width="2" x1="68" x2="84" y1="12" y2="12"></line>
+<line stroke="#C73A32" stroke-dasharray="2,2" stroke-width="2" x1="68" x2="90" y1="24" y2="24"></line>
+<line stroke="#C73A32" stroke-dasharray="2,2" stroke-width="2" x1="68" x2="80" y1="36" y2="36"></line>
+</g>
+<!-- LIVE FREE-BODY FORCE VECTORS (Fn=mint #1F8A5B, Fs=warm amber #C77A12, Fg=gold #C9A24B) -->
+<g class="block" id="forceVectors">
+<!-- Normal Force Fn (Mint #1F8A5B) -->
+<line marker-end="url(#arrowMint)" stroke="#1F8A5B" stroke-width="2.5" x1="32.5" x2="32.5" y1="22" y2="-55"></line>
+<text fill="#1F8A5B" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="40" y="-45">Fn = 1.30N</text>
+<!-- Static Friction Force Fs (Warm Amber #C77A12) -->
+<line marker-end="url(#arrowAmber)" stroke="#C77A12" stroke-width="2.5" x1="32.5" x2="-35" y1="44" y2="44"></line>
+<text fill="#C77A12" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="-70" y="40">Fs(max)</text>
+<!-- Down-plane component Fg_parallel (Gold #C9A24B) -->
+<line marker-end="url(#arrowGold)" stroke="#C9A24B" stroke-width="2" x1="32.5" x2="105" y1="44" y2="44"></line>
+<text fill="#8A6A1F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="110" y="48">Fg·sinθ</text>
+</g>
+</g>
+<!-- Dashed Deep Green Ultrasonic Measurement Dimension Line with White Badge Chip -->
+<g id="dimensionLine">
+<line stroke="#4A6460" stroke-dasharray="4,3" stroke-width="1.5" x1="130" x2="282.4" y1="362" y2="362"></line>
+<circle cx="130" cy="362" fill="#16322F" r="3"></circle>
+<circle cx="282.4" cy="362" fill="#16322F" r="3"></circle>
+<!-- Distance Badge Floating (White Chip with Deep Forest Green text and border) -->
+<rect fill="#FFFFFF" height="20" rx="2" stroke="#16322F" stroke-width="1.2" width="102" x="160" y="340"></rect>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" id="svgDistText" x="166" y="354">d = 182.4 mm</text>
+</g>
+</g>
+<!-- Global True Gravity Vector (Fixed straight down - Deep Green & Gold) -->
+<g id="trueGravityVector" transform="translate(420, 200)">
+<line marker-end="url(#arrowGold)" stroke="#C9A24B" stroke-width="2" x1="0" x2="0" y1="0" y2="55"></line>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="8" y="40">Fg = mg = 1.47N</text>
+</g>
+</svg>
+<!-- Floating In-Canvas Telemetry HUD Pill -->
+<div class="absolute top-4 left-4 bg-[#FFFFFF]/95 border border-[#D9E1DC] backdrop-blur px-space-md py-2 rounded flex items-center gap-space-md card-shadow">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#1F8A5B] animate-ping"></span>
+<span class="font-sans text-[11px] label-tracking text-[#16322F] font-bold uppercase">ACOUSTIC RANGING ACTIVE</span>
+</div>
+<span class="text-[#D9E1DC] font-mono text-[11px]">|</span>
+<span class="font-mono tabular-nums text-[11px] text-[#4A6460]">SPEED OF SOUND: 343.2 m/s @ 21.4°C</span>
+</div>
+<!-- Canvas Bottom Alert Floating Strip (High contrast Light Red Container with #C73A32 border) -->
+<div class="absolute bottom-4 inset-x-4 bg-[rgba(199,58,50,0.12)] border-2 border-[#C73A32] backdrop-blur px-space-md py-2 rounded flex items-center justify-between text-[#16322F] card-shadow" id="canvasAlertBanner">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-[#C73A32]">alarm_on</span>
+<span class="font-slab text-[14px] font-bold uppercase tracking-wider text-[#C73A32]">CRITICAL SLIP EVENT LATCHED (Δd ≥ 10mm)</span>
+</div>
+<span class="font-mono tabular-nums text-[12px] text-[#16322F]">DISPLACEMENT: <strong class="text-[#C73A32] font-bold underline font-slab text-[13px]">+11.8 mm</strong> | RIG HOLD AT θ = 27.4°</span>
+</div>
+</div>
+<!-- Bottom Micro Specs Bar -->
+<div class="mt-space-sm flex flex-wrap items-center justify-between text-[11px] font-mono tabular-nums text-[#4A6460]">
+<span>Rig Geometry: Plank 480mm • Servo Pitch Radius 34mm</span>
+<span>HC-SR04 Beam Cone: 15° Conical Aperture</span>
+<span class="text-[#8A6A1F] font-semibold">Encoder Resolution: 0.05° Quad</span>
+</div>
+</div>
+<!-- Real-Time Synchronized Dual Telemetry Charts -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- CHART A: Angle (deg) vs Time (s) - Muted Gold line -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-2 card-shadow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 font-sans text-[11px] label-tracking text-[#8A6A1F] font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">show_chart</span>
+<span>CH-1: ANGLE θ vs TIME</span>
+</div>
+<span class="font-mono tabular-nums text-[11px] text-[#8A9C98]">RAMP RATE: 1.0°/s</span>
+</div>
+<!-- Sunken Canvas Chart Plot -->
+<div class="w-full h-32 bg-[#EEF2EF] border border-[#D9E1DC] rounded p-1 relative flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 320 110">
+<!-- Grid Lines at #D9E1DC -->
+<line stroke="#D9E1DC" stroke-dasharray="2,2" stroke-width="1" x1="30" x2="310" y1="15" y2="15"></line>
+<line stroke="#D9E1DC" stroke-dasharray="2,2" stroke-width="1" x1="30" x2="310" y1="50" y2="50"></line>
+<line stroke="#D9E1DC" stroke-width="1" x1="30" x2="310" y1="85" y2="85"></line>
+<line stroke="#D9E1DC" stroke-width="1.5" x1="30" x2="30" y1="10" y2="90"></line>
+<!-- Axes labels -->
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="6" y="20">30°</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="6" y="55">15°</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="6" y="88">0°</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="30" y="102">0s</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="150" y="102">15s</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="250" y="102">t=27.4s</text>
+<!-- Linear Angle Rise Path in Muted Gold #C9A24B (2.5px) -->
+<path d="M 30 85 L 274 21 L 310 21" fill="none" stroke="#C9A24B" stroke-width="2.5"></path>
+<!-- Area Fill -->
+<path d="M 30 85 L 274 21 L 310 21 L 310 85 Z" fill="rgba(201, 162, 75, 0.12)"></path>
+<!-- Slip Moment Marker at t=27.4s in Muted Red #C73A32 -->
+<line stroke="#C73A32" stroke-dasharray="3,2" stroke-width="1.5" x1="274" x2="274" y1="10" y2="85"></line>
+<circle cx="274" cy="21" fill="#C73A32" r="3.5"></circle>
+<text fill="#C73A32" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="210" y="14">SLIP @ 27.4°</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[11px] font-mono tabular-nums text-[#4A6460]">
+<span>Peak: 27.4°</span>
+<span class="text-[#1F8A5B] font-bold">Linear Correlation R² = 0.999</span>
+</div>
+</div>
+<!-- CHART B: Distance d vs Time (s) - Deep Forest Green line -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-2 card-shadow">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 font-sans text-[11px] label-tracking text-[#16322F] font-bold uppercase">
+<span class="material-symbols-outlined text-[14px] text-[#1F8A5B]">timeline</span>
+<span>CH-2: ULTRASONIC d (mm) vs TIME</span>
+</div>
+<span class="font-mono tabular-nums text-[11px] text-[#C73A32] font-bold">STEP JUMP: +11.8mm</span>
+</div>
+<!-- Sunken Canvas Chart Plot -->
+<div class="w-full h-32 bg-[#EEF2EF] border border-[#D9E1DC] rounded p-1 relative flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 320 110">
+<!-- Grid Lines -->
+<line stroke="#D9E1DC" stroke-dasharray="2,2" stroke-width="1" x1="35" x2="310" y1="20" y2="20"></line>
+<line stroke="#D9E1DC" stroke-dasharray="2,2" stroke-width="1" x1="35" x2="310" y1="55" y2="55"></line>
+<line stroke="#D9E1DC" stroke-width="1" x1="35" x2="310" y1="85" y2="85"></line>
+<line stroke="#D9E1DC" stroke-width="1.5" x1="35" x2="35" y1="10" y2="90"></line>
+<!-- Axes labels -->
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="4" y="24">190</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="4" y="58">175</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="4" y="88">160</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="35" y="102">0s</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="150" y="102">15s</text>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" x="250" y="102">27.4s</text>
+<!-- Baseline Distance line in Deep Forest Green #16322F -->
+<path d="M 35 62 Q 70 61.5, 110 62.5 T 180 62 T 260 62 L 274 62 L 275 32 L 310 32" fill="none" stroke="#16322F" stroke-width="2.5"></path>
+<!-- Area Fill -->
+<path d="M 35 62 L 274 62 L 275 32 L 310 32 L 310 85 L 35 85 Z" fill="rgba(22, 50, 47, 0.06)"></path>
+<!-- Threshold trigger marker line in Muted Red -->
+<line stroke="#C73A32" stroke-dasharray="3,2" stroke-width="1.5" x1="274" x2="274" y1="10" y2="85"></line>
+<circle cx="275" cy="32" fill="#C73A32" r="3.5"></circle>
+<text fill="#C73A32" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="175" y="27">182.4 mm (SLIP)</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[11px] font-mono tabular-nums text-[#4A6460]">
+<span>Baseline: 170.6 mm</span>
+<span class="text-[#C73A32] font-bold">Δd &gt; 10.0mm Threshold Triggered</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT TELEMETRY & METRICS COLUMN (5 Cols on desktop) -->
+<div class="xl:col-span-5 flex flex-col gap-space-md">
+<!-- 5-METER CLASSROOM PROJECTOR JUMBO TILES -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Tile 1: Angle Readout (Deep Forest Green Numeral) -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] p-space-md rounded card-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="w-full h-1 bg-[#C9A24B] absolute top-0 left-0"></div>
+<div class="flex items-center justify-between">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">INCLINATION ANGLE (θ)</span>
+<span class="px-1.5 py-0.5 rounded bg-[#EEF2EF] border border-[#C9A24B]/50 text-[#8A6A1F] font-sans text-[11px] font-bold uppercase">LIVE</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-1">
+<span class="font-mono tabular-nums text-[52px] leading-tight text-[#16322F] font-bold tracking-tight" id="readoutAngle">27.4</span>
+<span class="font-mono text-[20px] text-[#4A6460]">°</span>
+</div>
+<div class="flex items-center justify-between font-mono tabular-nums text-[11px] text-[#4A6460]">
+<span>RATE: <strong class="text-[#16322F]">+1.00°/s</strong></span>
+<span>RES: ±0.05°</span>
+</div>
+</div>
+<!-- Tile 2: Target Distance Readout (Deep Forest Green Numeral) -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] p-space-md rounded card-shadow relative overflow-hidden flex flex-col justify-between">
+<div class="w-full h-1 bg-[#1F8A5B] absolute top-0 left-0"></div>
+<div class="flex items-center justify-between">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">POSITION DISTANCE (D)</span>
+<span class="px-1.5 py-0.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-sans text-[11px] font-bold uppercase">ULTRASONIC</span>
+</div>
+<div class="my-space-xs flex items-baseline gap-1">
+<span class="font-mono tabular-nums text-[52px] leading-tight text-[#16322F] font-bold tracking-tight" id="readoutDist">182.4</span>
+<span class="font-mono text-[20px] text-[#4A6460]">mm</span>
+</div>
+<div class="flex items-center justify-between font-mono tabular-nums text-[11px] text-[#4A6460]">
+<span>ZERO: 170.6 mm</span>
+<span class="text-[#1F8A5B] font-bold">STABLE ECHO</span>
+</div>
+</div>
+</div>
+<!-- HIGH-CONTRAST SLIP GAUGING SLIDER / PROGRESS BAR -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] p-space-md rounded card-shadow flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">DISPLACEMENT SLIP GAUGE (Δd)</span>
+<span class="font-mono tabular-nums text-[12px] text-[#C73A32] font-bold" id="readoutDeltaText">+11.8 mm (EXCEEDED)</span>
+</div>
+<!-- Precision Bar Track with 10mm Threshold Marker -->
+<div class="relative w-full h-5 bg-[#EEF2EF] border border-[#D9E1DC] rounded overflow-hidden flex items-center">
+<!-- 10mm Threshold marker at 66% in Muted Red -->
+<div class="absolute top-0 bottom-0 left-[66%] w-0.5 bg-[#C73A32] z-20"></div>
+<span class="absolute right-[35%] -top-0.5 font-mono tabular-nums text-[11px] text-[#C73A32] font-bold z-20">10.0mm LATCH</span>
+<!-- Filled Progress Bar in Red when latched -->
+<div class="h-full bg-[#C73A32] transition-all duration-300 w-[78%]" id="gaugeBar"></div>
+</div>
+<div class="flex items-center justify-between font-mono tabular-nums text-[11px] text-[#8A9C98]">
+<span>0.0 mm (LOCKED)</span>
+<span>THRESHOLD: 10.0 mm</span>
+<span>MAX CAP: 15.0 mm</span>
+</div>
+</div>
+<!-- SLIP EVENT HERO BANNER & COEFFICIENT CALCULATION CARD -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] p-space-md rounded card-shadow flex flex-col gap-space-sm relative overflow-hidden" id="slipHeroCard">
+<div class="w-full h-1 bg-[#C9A24B] absolute top-0 left-0"></div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="p-1 rounded bg-[#EEF2EF] border border-[#C9A24B] text-[#8A6A1F] flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+<div>
+<span class="font-serif-title text-[15px] text-[#8A6A1F] font-bold uppercase">PHYSICS RESULT: SLIP CONFIRMED</span>
+<p class="font-sans text-[13px] text-[#4A6460]">Rig motion latched upon Δd ≥ 10.0mm trigger</p>
+</div>
+</div>
+<!-- Acoustic buzzer indicator badge in Red -->
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[rgba(199,58,50,0.12)] border border-[#C73A32] text-[#C73A32] font-slab text-[12px] font-bold animate-pulse">
+<span class="material-symbols-outlined text-[14px]">volume_up</span>
+<span>BUZZER 2.4kHz ACTIVE</span>
+</div>
+</div>
+<!-- Mathematical Formula Card with Accessible Gold and Deep Forest Green Readout -->
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] font-bold uppercase">COEFFICIENT OF STATIC FRICTION (μs)</span>
+<span class="font-sans text-[11px] label-tracking text-[#8A6A1F] uppercase font-bold">Standard Model: μs = tan(θ)</span>
+</div>
+<!-- Big Formula Callout (Roboto Slab Dominant Readout) -->
+<div class="flex items-baseline justify-between flex-wrap gap-2 pt-1">
+<div class="flex items-baseline gap-2">
+<span class="font-slab text-[24px] text-[#8A6A1F] font-bold">μs = tan(27.4°) = </span>
+<span class="font-slab text-[44px] leading-none text-[#16322F] font-bold tabular-nums" id="readoutMu">0.518</span>
+</div>
+<span class="font-slab text-[13px] text-[#1F8A5B] font-bold tabular-nums">Angle of Repose: 27.40° ± 0.05°</span>
+</div>
+<!-- Mathematical Proof Breakdown -->
+<div class="pt-2 text-[11px] font-mono tabular-nums text-[#4A6460] flex flex-col gap-0.5">
+<span>ΣFx = mg·sin(θ) - Fs = 0 ⟹ Fs = mg·sin(θ)</span>
+<span>ΣFy = Fn - mg·cos(θ) = 0 ⟹ Fn = mg·cos(θ)</span>
+<span class="text-[#8A6A1F] font-semibold">μs = Fs / Fn = sin(θ) / cos(θ) = tan(θ) = 0.5184</span>
+</div>
+</div>
+</div>
+<!-- SESSION RUN HISTORY TABLE -->
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-md card-shadow flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-[#16322F]">
+<span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">history_edu</span>
+<span class="font-serif-title text-[15px] font-bold uppercase tracking-normal">EXPERIMENTAL RUN LOGS (TODAY)</span>
+</div>
+<span class="font-mono tabular-nums text-[12px] text-[#1F8A5B] font-bold">MEAN μs: 0.512</span>
+</div>
+<!-- Tabular Log -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-sans text-[12px]">
+<thead class="bg-[#EEF2EF] text-[#16322F] uppercase text-[11px] label-tracking border-b border-[#D9E1DC]">
+<tr>
+<th class="p-2 font-bold font-sans">Run</th>
+<th class="p-2 font-bold font-sans">Material Pair</th>
+<th class="p-2 font-bold font-sans">Slip Angle θ</th>
+<th class="p-2 font-bold font-sans">μs (tan θ)</th>
+<th class="p-2 font-bold font-sans">Duration</th>
+<th class="p-2 font-bold font-sans">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#D9E1DC]">
+<tr class="hover:bg-[#EEF2EF]/50">
+<td class="p-2 text-[#16322F] font-mono tabular-nums font-bold">#01</td>
+<td class="p-2 text-[#4A6460] font-sans">Pine / Sanded Block</td>
+<td class="p-2 text-[#16322F] font-mono tabular-nums">26.8°</td>
+<td class="p-2 text-[#8A6A1F] font-mono tabular-nums font-bold">0.505</td>
+<td class="p-2 text-[#4A6460] font-mono tabular-nums">26.8 s</td>
+<td class="p-2"><span class="px-1.5 py-0.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-sans text-[11px] font-bold">VALID</span></td>
+</tr>
+<tr class="bg-[#EEF2EF] border-l-4 border-[#16322F]">
+<td class="p-2 text-[#16322F] font-mono tabular-nums font-bold">#02 (Cur)</td>
+<td class="p-2 text-[#16322F] font-sans font-medium">Pine / Sanded Block</td>
+<td class="p-2 text-[#16322F] font-mono tabular-nums font-bold">27.4°</td>
+<td class="p-2 text-[#8A6A1F] font-mono tabular-nums font-bold">0.518</td>
+<td class="p-2 text-[#16322F] font-mono tabular-nums">27.4 s</td>
+<td class="p-2"><span class="px-1.5 py-0.5 rounded bg-[rgba(199,58,50,0.12)] border border-[#C73A32] text-[#C73A32] font-slab text-[11px] font-bold">LATCHED</span></td>
+</tr>
+<tr class="hover:bg-[#EEF2EF]/50">
+<td class="p-2 text-[#16322F] font-mono tabular-nums font-bold">#03</td>
+<td class="p-2 text-[#4A6460] font-sans">Pine / Sanded Block</td>
+<td class="p-2 text-[#16322F] font-mono tabular-nums">27.1°</td>
+<td class="p-2 text-[#8A6A1F] font-mono tabular-nums font-bold">0.512</td>
+<td class="p-2 text-[#4A6460] font-mono tabular-nums">27.1 s</td>
+<td class="p-2"><span class="px-1.5 py-0.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-sans text-[11px] font-bold">VALID</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="flex items-center justify-between text-[11px] font-sans text-[#4A6460] pt-1">
+<span class="font-mono tabular-nums">Std Deviation σ = ±0.007</span>
+<button class="text-[#8A6A1F] hover:underline flex items-center gap-1 font-sans font-bold" onclick="exportCsvLog()">
+<span class="material-symbols-outlined text-[12px]">download</span>
+<span>EXPORT RAW CSV TELEMETRY</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 2: NETWORK / IP CONFIGURATION PANEL (Switchable) -->
+<div class="hidden w-full p-space-md lg:p-space-lg flex flex-col gap-space-lg" id="panelNetwork">
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-lg flex flex-col gap-space-lg max-w-4xl mx-auto w-full card-shadow">
+<div class="flex items-start justify-between flex-wrap gap-space-md">
+<div>
+<span class="font-sans text-[11px] label-tracking text-[#8A6A1F] uppercase font-bold">HARDWARE PERIPHERAL BRIDGE</span>
+<h2 class="font-serif-title text-[24px] text-[#16322F] font-bold">Arduino UNO R4 WiFi Benchmark Connection</h2>
+<p class="font-sans text-[14px] text-[#4A6460] mt-1">Configure direct WebSocket/HTTP endpoint to physical ultrasonic stepper bench rig.</p>
+</div>
+<span class="px-space-md py-1.5 rounded bg-[rgba(31,138,91,0.12)] border border-[#1F8A5B]/30 text-[#1F8A5B] font-sans text-[12px] font-bold flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#1F8A5B]"></span>
+<span>LINK ESTABLISHED (60Hz)</span>
+</span>
+</div>
+<!-- Config Inputs Form -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<div class="flex flex-col gap-1.5">
+<label class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">DEVICE IP ADDRESS</label>
+<input class="bg-[#EEF2EF] border border-[#D9E1DC] px-space-md py-2.5 rounded font-mono tabular-nums text-[14px] text-[#16322F] focus:outline-none focus:ring-2 focus:ring-[#16322F] focus:ring-offset-2 focus:ring-offset-white" id="cfgIp" type="text" value="192.168.4.105"/>
+<span class="font-mono tabular-nums text-[11px] text-[#8A9C98]">Default SoftAP IP is 192.168.4.1 or assigned mDNS bench-02.local</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">PORT / WEBSOCKET PROTOCOL</label>
+<input class="bg-[#EEF2EF] border border-[#D9E1DC] px-space-md py-2.5 rounded font-mono tabular-nums text-[14px] text-[#16322F] focus:outline-none focus:ring-2 focus:ring-[#16322F] focus:ring-offset-2 focus:ring-offset-white" id="cfgPort" type="text" value="8080 (ws://192.168.4.105:8080/ws)"/>
+<span class="font-mono tabular-nums text-[11px] text-[#8A9C98]">Synchronous JSON telemetry format streaming 60 times/sec</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">LABORATORY WI-FI SSID</label>
+<input class="bg-[#EEF2EF] border border-[#D9E1DC] px-space-md py-2.5 rounded font-mono tabular-nums text-[14px] text-[#16322F] focus:outline-none focus:ring-2 focus:ring-[#16322F] focus:ring-offset-2 focus:ring-offset-white" type="text" value="APEX_PHYSICS_LAB_5G"/>
+<span class="font-sans text-[11px] text-[#8A9C98]">WPA3-Enterprise Secured Channel 48</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">SIMULATION MODE / DEMO OVERRIDE</label>
+<select class="bg-[#EEF2EF] border border-[#D9E1DC] px-space-md py-2.5 rounded font-sans text-[14px] text-[#16322F] focus:outline-none focus:ring-2 focus:ring-[#16322F] focus:ring-offset-2 focus:ring-offset-white">
+<option>PHYSICAL HARDWARE LINK (Arduino UNO R4)</option>
+<option>SYNTHETIC PHYSICS ENGINE (Offline Classroom Demo)</option>
+<option>RECORDED DATA REPLAY (Batch Session #104)</option>
+</select>
+<span class="font-sans text-[11px] text-[#8A9C98]">Fallback to synthetic math engine if rig Wi-Fi signal is dropped</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-between flex-wrap gap-space-md pt-space-md">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F] text-[#16322F] font-sans text-[12px] font-semibold flex items-center gap-2 transition-all" onclick="pingHardware()">
+<span class="material-symbols-outlined text-[16px] text-[#8A6A1F]">network_ping</span>
+<span>SEND PING ICMP (12ms)</span>
+</button>
+<button class="px-space-md py-2 rounded bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#16322F] text-[#16322F] font-sans text-[12px] font-semibold flex items-center gap-2 transition-all" onclick="zeroSensorCalibration()">
+<span class="material-symbols-outlined text-[16px] text-[#1F8A5B]">straighten</span>
+<span>ZERO HC-SR04 OFFSET</span>
+</button>
+</div>
+<button class="px-space-lg py-2.5 rounded bg-[#16322F] hover:bg-[#204440] text-white font-sans text-[12px] font-bold uppercase card-shadow border-b-2 border-[#C9A24B] flex items-center gap-2 transition-all" onclick="saveNetworkConfig()">
+<span class="material-symbols-outlined text-[18px] text-[#C9A24B]">save</span>
+<span>SAVE &amp; RECONNECT RIG</span>
+</button>
+</div>
+<!-- Live Packet Inspector Log Terminal -->
+<div class="flex flex-col gap-1.5 mt-space-sm">
+<span class="font-sans text-[11px] label-tracking text-[#4A6460] uppercase font-bold">INCOMING RAW JSON TELEMETRY TELETYPE</span>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded font-mono tabular-nums text-[11px] text-[#16322F] space-y-1 h-36 overflow-y-auto">
+<p class="text-[#4A6460]">[14:32:01.402] {"rig_id": 2, "state": "RUNNING", "theta_deg": 27.20, "dist_mm": 170.8, "slip_flag": 0}</p>
+<p class="text-[#4A6460]">[14:32:01.419] {"rig_id": 2, "state": "RUNNING", "theta_deg": 27.30, "dist_mm": 170.7, "slip_flag": 0}</p>
+<p class="text-[#4A6460]">[14:32:01.435] {"rig_id": 2, "state": "RUNNING", "theta_deg": 27.38, "dist_mm": 171.0, "slip_flag": 0}</p>
+<p class="text-[#C73A32] font-bold">[14:32:01.452] {"rig_id": 2, "state": "SLIP_LATCH", "theta_deg": 27.40, "dist_mm": 182.4, "delta_d": 11.8, "slip_flag": 1, "buzzer": "ON"}</p>
+<p class="text-[#8A6A1F] font-semibold">[14:32:01.468] ACK: Stepper driver halted at step 822. PWM duty = 0. Repose angle locked.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 3: ALL EXPERIMENTAL STATES CAROUSEL & PREVIEW (Switchable) -->
+<div class="hidden w-full p-space-md lg:p-space-lg flex flex-col gap-space-lg" id="panelStates">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="font-sans text-[11px] label-tracking text-[#8A6A1F] uppercase font-bold">STATE MACHINE AUDIT DECK</span>
+<span class="px-2 py-0.5 rounded bg-[#EEF2EF] border border-[#D9E1DC] text-[#4A6460] text-[11px] font-sans font-bold">6 SYSTEM PHASES</span>
+</div>
+<h2 class="font-serif-title text-[24px] text-[#16322F] font-bold">Interactive Bench Hardware State Visualizer</h2>
+<p class="font-sans text-[14px] text-[#4A6460]">Preview how the instrument display, alarms, and physics engine behave under all laboratory edge conditions.</p>
+</div>
+<!-- 6 Interactive State Preview Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- State 1: Resetting -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow" onclick="simulateState('resetting')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[#EEF2EF] text-[#16322F] font-mono tabular-nums text-[11px] font-bold">STATE 01</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#C9A24B]"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#16322F] font-bold">1. Resetting (Leveling)</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Dual servo drives rotate plank counter-clockwise until physical microswitch at 0.0° triggers. Calibration zeroing runs.</p>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-mono tabular-nums text-[11px] text-[#4A6460] flex items-center justify-between">
+<span>Servo: Returning to 0°</span>
+<span class="text-[#8A6A1F] font-bold font-sans">ACTUATING</span>
+</div>
+</div>
+<!-- State 2: Place Block (Countdown) -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow relative overflow-hidden" onclick="simulateState('place_block')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[#EEF2EF] text-[#16322F] font-mono tabular-nums text-[11px] font-bold">STATE 02</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#1F8A5B]"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#16322F] font-bold">2. Place Block (3s Countdown)</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Visual prompt instructing student to place specimen block against the mechanical alignment mark at baseline d ≈ 170mm.</p>
+<div class="pt-1">
+<span class="font-script text-[24px] text-[#8A6A1F] leading-none select-none">“Place the block now to initiate run…”</span>
+</div>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-mono tabular-nums text-[11px] text-[#1F8A5B] flex items-center justify-between">
+<span>Awaiting Target: 3... 2... 1</span>
+<span class="font-bold font-sans">ARMING</span>
+</div>
+</div>
+<!-- State 3: Running (Active) -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow" onclick="simulateState('running')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[#EEF2EF] text-[#16322F] font-mono tabular-nums text-[11px] font-bold">STATE 03</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#16322F] animate-pulse"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#16322F] font-bold">3. Running (Inclination Ramp)</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Smooth 1.0 deg/sec ramp. Ultrasonic sensor takes continuous 60Hz echo samples. Charts stream real-time baseline.</p>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-mono tabular-nums text-[11px] text-[#16322F] flex items-center justify-between">
+<span>Ramping: θ = 0° ➔ 60°</span>
+<span class="font-bold text-[#1F8A5B]">60 Hz RX</span>
+</div>
+</div>
+<!-- State 4: Block Slipped (With Buzzer) -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow" onclick="simulateState('slipped')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[rgba(199,58,50,0.12)] text-[#C73A32] font-mono tabular-nums text-[11px] font-bold">STATE 04</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#C73A32] animate-ping"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#C73A32] font-bold">4. Slip Detected (Buzzer &amp; Result)</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Displacement exceeds +10.0mm. Stepper driver halts instantly. High-pitch buzzer sounds. Repose angle &amp; μs computed.</p>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-slab text-[11px] text-[#C73A32] flex items-center justify-between">
+<span>Halt Trigger: Δd ≥ 10mm</span>
+<span class="font-bold">BUZZER ON</span>
+</div>
+</div>
+<!-- State 5: No Echo Sensor Error (Warm Amber #C77A12) -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow" onclick="simulateState('echo_error')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[rgba(199,122,18,0.12)] text-[#C73A32] font-mono tabular-nums text-[11px] font-bold">STATE 05</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#C77A12]"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#C77A12] font-bold">5. Sensor Echo Timeout (Error)</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Block missing, sound-absorbing foam placed, or acoustic scatter beyond 15° cone. Safety abort engages after 250ms timeout.</p>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-mono tabular-nums text-[11px] text-[#C77A12] flex items-center justify-between">
+<span>Error: NO_ECHO_PULSE</span>
+<span class="font-bold font-sans">ECHO TIMEOUT</span>
+</div>
+</div>
+<!-- State 6: Connection Lost -->
+<div class="cursor-pointer bg-[#FFFFFF] hover:bg-[#EEF2EF] border border-[#D9E1DC] p-space-md rounded flex flex-col justify-between gap-space-md transition-all card-shadow" onclick="simulateState('conn_lost')">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded bg-[rgba(199,58,50,0.12)] text-[#C73A32] font-mono tabular-nums text-[11px] font-bold">STATE 06</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#C73A32]"></span>
+</div>
+<h3 class="font-serif-title text-[17px] text-[#C73A32] font-bold">6. Hardware Connection Lost</h3>
+<p class="font-sans text-[13px] text-[#4A6460]">Wi-Fi disconnect or physical power interruption. Telemetry freezes with amber caution barrier and auto-reconnect polling.</p>
+</div>
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] p-2 rounded font-mono tabular-nums text-[11px] text-[#C73A32] flex items-center justify-between">
+<span>WS Socket: DISCONNECTED</span>
+<span class="font-bold font-sans">HEARTBEAT DROP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 4: SIMULATION SPEC & REDLINES (Switchable) -->
+<div class="hidden w-full p-space-md lg:p-space-lg flex flex-col gap-space-lg" id="panelSpecs">
+<div class="bg-[#FFFFFF] border border-[#D9E1DC] rounded p-space-lg flex flex-col gap-space-lg card-shadow">
+<div>
+<div class="flex items-center gap-2">
+<span class="font-sans text-[11px] label-tracking text-[#8A6A1F] uppercase font-bold">DEVELOPER SPECIFICATION &amp; REDLINE HANDOFF</span>
+<span class="px-2 py-0.5 rounded bg-[#EEF2EF] border border-[#D9E1DC] text-[#16322F] text-[11px] font-mono tabular-nums font-bold">REV 2.4.1</span>
+</div>
+<h2 class="font-serif-title text-[24px] text-[#16322F] font-bold mt-1">Mathematical Engine, Geometric Offsets &amp; SVG Schematics</h2>
+<p class="font-sans text-[14px] text-[#4A6460]">Complete mechanical tolerances, electrical pinouts, and kinematic models for hardware bench synchronization.</p>
+</div>
+<!-- Grid of Engineering Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md">
+<!-- Spec Card 1: Rig Dimensions -->
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-space-xs">
+<span class="font-serif-title text-[14px] text-[#8A6A1F] font-bold uppercase">1. Mechanical Dimensions</span>
+<ul class="font-mono tabular-nums text-[12px] text-[#4A6460] space-y-1.5 pt-2">
+<li>• Plank Dimensions: <strong class="text-[#16322F]">480 mm × 65 mm × 18 mm</strong></li>
+<li>• Pivot Hinge Origin: <strong class="text-[#16322F]">X: 90, Y: 390 (SVG Canvas)</strong></li>
+<li>• Ultrasonic Transducer Offset: <strong class="text-[#16322F]">15 mm from hinge</strong></li>
+<li>• Specimen Block: <strong class="text-[#16322F]">65 mm length, mass 150.0 g</strong></li>
+<li>• Angular Travel Range: <strong class="text-[#16322F]">0.00° to 60.00°</strong></li>
+</ul>
+</div>
+<!-- Spec Card 2: Kinematic Formulas -->
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-space-xs">
+<span class="font-serif-title text-[14px] text-[#8A6A1F] font-bold uppercase">2. Mathematical Physics Models</span>
+<div class="font-mono tabular-nums text-[11px] text-[#4A6460] space-y-2 pt-2">
+<p>• Normal Force: <span class="text-[#1F8A5B] font-bold">Fn(θ) = m · g · cos(θ)</span></p>
+<p>• Parallel Gravity: <span class="text-[#8A6A1F] font-bold">F∥(θ) = m · g · sin(θ)</span></p>
+<p>• At Slip Equilibrium: <span class="text-[#C77A12] font-bold">Fs = μs · Fn</span></p>
+<p>• Static Friction: <span class="text-[#16322F] font-bold">μs = tan(θ_repose)</span></p>
+<p>• Ranging Time: <span class="text-[#16322F]">d = (t_echo × v_sound) / 2</span></p>
+</div>
+</div>
+<!-- Spec Card 3: Arduino Pin Mapping -->
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-space-xs">
+<span class="font-serif-title text-[14px] text-[#1F8A5B] font-bold uppercase">3. Hardware I/O Pin Map</span>
+<ul class="font-mono tabular-nums text-[12px] text-[#4A6460] space-y-1.5 pt-2">
+<li>• HC-SR04 Trig: <strong class="text-[#16322F]">Pin D9 (10μs TTL)</strong></li>
+<li>• HC-SR04 Echo: <strong class="text-[#16322F]">Pin D8 (Interrupt Capable)</strong></li>
+<li>• Servo PWM Signal: <strong class="text-[#16322F]">Pin D5 (50Hz Frame)</strong></li>
+<li>• Audio Buzzer: <strong class="text-[#16322F]">Pin D6 (2.4kHz Active Piezo)</strong></li>
+<li>• Zero Limit Switch: <strong class="text-[#16322F]">Pin D2 (Internal Pullup)</strong></li>
+</ul>
+</div>
+</div>
+<!-- Developer Redline SVG Blueprint Wireframe -->
+<div class="bg-[#EEF2EF] border border-[#D9E1DC] rounded p-space-md flex flex-col gap-2">
+<span class="font-serif-title text-[14px] text-[#16322F] uppercase font-bold">SVG RIG REDLINE OVERLAY &amp; BOUNDING RECTANGLES</span>
+<div class="w-full h-48 bg-[#FFFFFF] border border-[#D9E1DC] rounded relative p-2 overflow-hidden flex items-center justify-center">
+<svg class="w-full h-full" viewbox="0 0 700 180">
+<!-- Outlines with redline dimension markers -->
+<rect fill="none" height="30" stroke="#D9E1DC" stroke-dasharray="2,2" stroke-width="1.5" width="600" x="50" y="130"></rect>
+<text fill="#8A9C98" font-family="JetBrains Mono" font-size="11" font-weight="600" x="60" y="150">BASE BED: 600mm W × 30mm H</text>
+<rect fill="none" height="20" stroke="#16322F" stroke-width="2" width="480" x="80" y="60"></rect>
+<text fill="#16322F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="90" y="74">PLANK ELEMENT [480px, rotatable θ]</text>
+<!-- Ultrasonic box -->
+<rect fill="none" height="25" stroke="#C9A24B" stroke-width="1.5" width="30" x="90" y="35"></rect>
+<text fill="#8A6A1F" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="75" y="30">HC-SR04 [X:90, Y:35]</text>
+<!-- Block box -->
+<rect fill="none" height="35" stroke="#1F8A5B" stroke-dasharray="2,2" stroke-width="1.5" width="65" x="250" y="25"></rect>
+<text fill="#1F8A5B" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="255" y="20">TEST SPECIMEN [65×35px]</text>
+<!-- Dimension callout arrows -->
+<line stroke="#C77A12" stroke-width="1.5" x1="120" x2="250" y1="50" y2="50"></line>
+<circle cx="120" cy="50" fill="#C77A12" r="2.5"></circle>
+<circle cx="250" cy="50" fill="#C77A12" r="2.5"></circle>
+<text fill="#C77A12" font-family="JetBrains Mono" font-size="11" font-weight="bold" x="145" y="46">d_echo = 130mm - 450mm</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[11px] font-mono tabular-nums text-[#4A6460]">
+<span>Coordinate Grid Origin: Top-Left (0, 0)</span>
+<span class="text-[#8A6A1F] font-semibold">Vector Transformation: SVG rotate(-theta, 90, 390)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CLIENT JAVASCRIPT ENGINE FOR LIVE BENCH INTERACTIONS -->
+<script>
+  // Simulation State Variables
+  let currentTheta = 27.4;
+  let currentDist = 182.4;
+  let isSlipLatched = true;
+  let showVectors = true;
+  let packetCount = 4892;
+  let activeTab = 'live';
+
+  // Incremental Packet counter ticker
+  setInterval(() => {
+    packetCount += 1;
+    const el = document.getElementById('packetCounter');
+    if (el) el.innerText = packetCount.toLocaleString() + ' pkts';
+  }, 1000);
+
+  // Tab Switcher Function
+  function switchMainTab(tabId) {
+    activeTab = tabId;
+    const pLive = document.getElementById('panelLive');
+    const pNet = document.getElementById('panelNetwork');
+    const pStates = document.getElementById('panelStates');
+    const pSpecs = document.getElementById('panelSpecs');
+
+    const b1 = document.getElementById('tabBtn1');
+    const b2 = document.getElementById('tabBtn2');
+    const b3 = document.getElementById('tabBtn3');
+    const b4 = document.getElementById('tabBtn4');
+
+    // Reset tab panels
+    [pLive, pNet, pStates, pSpecs].forEach(p => p.classList.add('hidden'));
+    [b1, b2, b3, b4].forEach(b => {
+      b.className = "px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 text-[#4A6460] hover:text-[#16322F] hover:bg-[#FFFFFF] transition-all";
+    });
+
+    const activeClasses = "px-space-md py-1.5 rounded font-sans text-[12px] font-semibold flex items-center gap-2 bg-[#16322F] text-white card-shadow transition-all";
+
+    if (tabId === 'live') {
+      pLive.classList.remove('hidden');
+      b1.className = activeClasses;
+    } else if (tabId === 'network') {
+      pNet.classList.remove('hidden');
+      b2.className = activeClasses;
+    } else if (tabId === 'states') {
+      pStates.classList.remove('hidden');
+      b3.className = activeClasses;
+    } else if (tabId === 'specs') {
+      pSpecs.classList.remove('hidden');
+      b4.className = activeClasses;
+    }
+  }
+
+  // Toggle Physics Vectors Overlay
+  function toggleVectors() {
+    showVectors = !showVectors;
+    const vGroup = document.getElementById('forceVectors');
+    const vGravity = document.getElementById('trueGravityVector');
+    const lbl = document.getElementById('lblVectors');
+
+    if (showVectors) {
+      vGroup.style.display = 'block';
+      vGravity.style.display = 'block';
+      lbl.innerText = 'ON';
+      lbl.className = 'text-[#1F8A5B] font-bold';
+    } else {
+      vGroup.style.display = 'none';
+      vGravity.style.display = 'none';
+      lbl.innerText = 'OFF';
+      lbl.className = 'text-[#8A9C98] font-bold';
+    }
+  }
+
+  // Interactive Demo Slip Trigger
+  function triggerDemoSlip() {
+    isSlipLatched = true;
+    currentTheta = 27.4;
+    currentDist = 182.4;
+    updateSimulationVisuals(currentTheta, currentDist, true);
+  }
+
+  // Full Test Bench Reset (0 deg)
+  function resetFullTest() {
+    const btn = document.getElementById('btnResetMain');
+    btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin text-[#C9A24B]">sync</span><span>RESETTING RIG...</span>`;
+    btn.disabled = true;
+
+    // Simulate returning to horizontal
+    let targetTheta = 0.0;
+    let targetDist = 170.6;
+    isSlipLatched = false;
+
+    setTimeout(() => {
+      currentTheta = targetTheta;
+      currentDist = targetDist;
+      updateSimulationVisuals(currentTheta, currentDist, false);
+      btn.innerHTML = `<span class="material-symbols-outlined text-[18px] text-[#C9A24B]">restart_alt</span><span>RESET BENCH (0°)</span>`;
+      btn.disabled = false;
+    }, 600);
+  }
+
+  // Visual Updater for SVG and Telemetry HUD
+  function updateSimulationVisuals(theta, dist, slipped) {
+    // 1. Rotate Plank
+    const plank = document.getElementById('rotatingPlank');
+    if (plank) plank.setAttribute('transform', `rotate(-${theta}, 90, 390)`);
+
+    // 2. Adjust Angle Arc
+    const arcPath = document.getElementById('angleArcPath');
+    const angleText = document.getElementById('svgAngleText');
+    if (theta <= 0.1) {
+      if (arcPath) arcPath.setAttribute('d', 'M 90 390 L 90 390 Z');
+      if (angleText) angleText.textContent = '0.0°';
+    } else {
+      const rad = (theta * Math.PI) / 180;
+      const xEnd = 90 + 100 * Math.cos(rad);
+      const yEnd = 390 - 100 * Math.sin(rad);
+      if (arcPath) arcPath.setAttribute('d', `M 190 390 A 100 100 0 0 0 ${xEnd.toFixed(1)} ${yEnd.toFixed(1)} L 90 390 Z`);
+      if (angleText) angleText.textContent = `${theta.toFixed(1)}°`;
+    }
+
+    // 3. Update Block Position on Plank
+    const block = document.getElementById('testBlock');
+    const blockX = 100 + dist;
+    if (block) block.setAttribute('transform', `translate(${blockX.toFixed(1)}, 336)`);
+
+    // 4. Update Ultrasonic Dimension Line
+    const dimLine = document.querySelector('#dimensionLine line');
+    const dimCirc2 = document.querySelectorAll('#dimensionLine circle')[1];
+    const dimText = document.getElementById('svgDistText');
+    if (dimLine) dimLine.setAttribute('x2', blockX.toFixed(1));
+    if (dimCirc2) dimCirc2.setAttribute('cx', blockX.toFixed(1));
+    if (dimText) dimText.textContent = `d = ${dist.toFixed(1)} mm`;
+
+    // 5. Update Jumbo Projector Readouts
+    const rAngle = document.getElementById('readoutAngle');
+    const rDist = document.getElementById('readoutDist');
+    const rMu = document.getElementById('readoutMu');
+    const rDelta = document.getElementById('readoutDeltaText');
+    const gauge = document.getElementById('gaugeBar');
+
+    if (rAngle) rAngle.innerText = theta.toFixed(1);
+    if (rDist) rDist.innerText = dist.toFixed(1);
+
+    const delta = dist - 170.6;
+    if (rDelta) {
+      rDelta.innerText = `+${delta.toFixed(1)} mm ${slipped ? '(EXCEEDED)' : '(NOMINAL)'}`;
+      rDelta.className = slipped ? 'font-mono tabular-nums text-[12px] text-[#C73A32] font-bold' : 'font-mono tabular-nums text-[12px] text-[#1F8A5B] font-bold';
+    }
+
+    // Gauge bar width %
+    const gaugePercent = Math.min(100, Math.max(10, (delta / 15.0) * 100));
+    if (gauge) {
+      gauge.style.width = `${gaugePercent}%`;
+      gauge.className = slipped ? 'h-full bg-[#C73A32] transition-all duration-300' : 'h-full bg-[#1F8A5B] transition-all duration-300';
+    }
+
+    // μs computation
+    const mu = Math.tan((theta * Math.PI) / 180);
+    if (rMu) rMu.innerText = mu.toFixed(3);
+
+    // Alert Banner & Hero Card visibility
+    const alertBanner = document.getElementById('canvasAlertBanner');
+    const slipHero = document.getElementById('slipHeroCard');
+    const slipLines = document.getElementById('slipMotionLines');
+
+    if (slipped) {
+      if (alertBanner) alertBanner.classList.remove('hidden');
+      if (slipHero) slipHero.classList.remove('opacity-40');
+      if (slipLines) slipLines.style.display = 'block';
+    } else {
+      if (alertBanner) alertBanner.classList.add('hidden');
+      if (slipHero) slipHero.classList.add('opacity-40');
+      if (slipLines) slipLines.style.display = 'none';
+    }
+  }
+
+  // Simulate Specific States from Tab 3
+  function simulateState(stateKey) {
+    switchMainTab('live');
+    if (stateKey === 'resetting') {
+      resetFullTest();
+    } else if (stateKey === 'place_block') {
+      updateSimulationVisuals(0.0, 170.6, false);
+      alert("STATE PREVIEW: 'Place Specimen Block' countdown prompt initiated. Hardware awaiting target.");
+    } else if (stateKey === 'running') {
+      updateSimulationVisuals(14.2, 170.6, false);
+    } else if (stateKey === 'slipped') {
+      triggerDemoSlip();
+    } else if (stateKey === 'echo_error') {
+      alert("STATE PREVIEW: HC-SR04 Echo Timeout Error. Acoustic signal dispersed. Hardware halt engaged.");
+    } else if (stateKey === 'conn_lost') {
+      alert("STATE PREVIEW: Wi-Fi WebSocket Link Lost at 192.168.4.105. Polling re-connection...");
+    }
+  }
+
+  // Network Tools Stubs
+  function pingHardware() {
+    alert("ICMP Echo to 192.168.4.105: 4 packets transmitted, 4 received, 0% packet loss. RTT avg = 11.8ms.");
+  }
+
+  function zeroSensorCalibration() {
+    alert("HC-SR04 Baseline Zeroed: Current position set as reference point d0 = 170.6 mm.");
+  }
+
+  function saveNetworkConfig() {
+    alert("Configuration committed to Arduino EEPROM. Rig re-initialized successfully.");
+    switchMainTab('live');
+  }
+
+  function exportCsvLog() {
+    const csvContent = "data:text/csv;charset=utf-8,Run,Material,Slip_Angle_Deg,Mu_Static,Duration_s\\n1,Pine/Sanded,26.8,0.505,26.8\\n2,Pine/Sanded,27.4,0.518,27.4\\n3,Pine/Sanded,27.1,0.512,27.1";
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "AutoRoller_RunTelemetry_Physics304.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+</script></main></div></body></html>
