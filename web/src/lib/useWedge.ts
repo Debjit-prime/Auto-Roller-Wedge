@@ -7,17 +7,103 @@ const LOCAL_STORAGE_IP_KEY = 'auto_roller_wedge_arduino_ip';
 const LOCAL_STORAGE_DEMO_KEY = 'auto_roller_wedge_is_demo';
 const DEFAULT_IP = '10.62.117.48';
 
-export function useWedge() {
-  const [arduinoIp, setArduinoIpState] = useState<string>(() => {
-    const stored = localStorage.getItem(LOCAL_STORAGE_IP_KEY);
-    if (!stored || stored === '10.62.117.177' || stored === '192.168.4.105') {
-      localStorage.setItem(LOCAL_STORAGE_IP_KEY, DEFAULT_IP);
-      return DEFAULT_IP;
+/**
+ * Robustly extracts the Arduino IP with priority:
+ * 1. URL search params (?ip=... or ?arduino=... or ?host=...)
+ * 2. Bare IP in URL search (?10.62.117.48)
+ * 3. URL hash (#ip=... or #10.62.117.48)
+ * 4. LocalStorage (migrating stale legacy IPs)
+ * 5. Default fallback IP
+ */
+export function resolveArduinoIp(
+  searchString?: string,
+  hashString?: string,
+  storedIp?: string | null
+): string {
+  // 1. Check URL search query
+  if (searchString) {
+    const cleanSearch = searchString.startsWith('?') ? searchString : `?${searchString}`;
+    const params = new URLSearchParams(cleanSearch);
+    const urlIp = params.get('ip') || params.get('arduino') || params.get('host');
+    if (urlIp && urlIp.trim()) {
+      return urlIp.trim();
     }
-    return stored;
-  });
+    const rawSearch = cleanSearch.replace(/^\?/, '').trim();
+    if (/^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(rawSearch)) {
+      return rawSearch;
+    }
+  }
+
+  // 2. Check URL hash
+  if (hashString) {
+    const cleanHash = hashString.replace(/^#/, '').trim();
+    const hashParams = new URLSearchParams(cleanHash);
+    const hashIp = hashParams.get('ip') || hashParams.get('arduino') || hashParams.get('host');
+    if (hashIp && hashIp.trim()) {
+      return hashIp.trim();
+    }
+    if (/^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(cleanHash)) {
+      return cleanHash;
+    }
+  }
+
+  // 3. Stored localStorage IP
+  if (storedIp && storedIp.trim()) {
+    const cleanStored = storedIp.trim();
+    if (cleanStored !== '10.62.117.177' && cleanStored !== '192.168.4.105') {
+      return cleanStored;
+    }
+  }
+
+  return DEFAULT_IP;
+}
+
+/**
+ * Checks whether an explicit IP was provided via URL query or hash.
+ */
+export function hasUrlProvidedIp(searchString?: string, hashString?: string): boolean {
+  if (searchString) {
+    const cleanSearch = searchString.startsWith('?') ? searchString : `?${searchString}`;
+    const params = new URLSearchParams(cleanSearch);
+    if (params.get('ip') || params.get('arduino') || params.get('host')) return true;
+    const rawSearch = cleanSearch.replace(/^\?/, '').trim();
+    if (/^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(rawSearch)) return true;
+  }
+  if (hashString) {
+    const cleanHash = hashString.replace(/^#/, '').trim();
+    const hashParams = new URLSearchParams(cleanHash);
+    if (hashParams.get('ip') || hashParams.get('arduino') || hashParams.get('host')) return true;
+    if (/^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(cleanHash)) return true;
+  }
+  return false;
+}
+
+function getInitialIp(): string {
+  const search = typeof window !== 'undefined' ? window.location.search : '';
+  const hash = typeof window !== 'undefined' ? window.location.hash : '';
+  let stored: string | null = null;
+  try {
+    stored = localStorage.getItem(LOCAL_STORAGE_IP_KEY);
+  } catch {}
+
+  const ip = resolveArduinoIp(search, hash, stored);
+  try {
+    localStorage.setItem(LOCAL_STORAGE_IP_KEY, ip);
+  } catch {}
+  return ip;
+}
+
+export function useWedge() {
+  const isHttps = typeof window !== 'undefined' && window.location.protocol === 'https:';
+  const [arduinoIp, setArduinoIpState] = useState<string>(getInitialIp);
 
   const [isDemo, setIsDemoState] = useState<boolean>(() => {
+    // If an explicit IP was provided via URL query or hash, prioritize live hardware over demo
+    if (typeof window !== 'undefined') {
+      if (hasUrlProvidedIp(window.location.search, window.location.hash)) {
+        return false;
+      }
+    }
     return localStorage.getItem(LOCAL_STORAGE_DEMO_KEY) === 'true';
   });
 
@@ -47,11 +133,42 @@ export function useWedge() {
 
   const setArduinoIp = useCallback((ip: string) => {
     const clean = ip.trim();
-    localStorage.setItem(LOCAL_STORAGE_IP_KEY, clean);
+    if (!clean) return;
+
+    try {
+      localStorage.setItem(LOCAL_STORAGE_IP_KEY, clean);
+      localStorage.setItem(LOCAL_STORAGE_DEMO_KEY, 'false');
+    } catch {}
+
+    // Automatically update the browser URL query parameter (?ip=...) so it can be shared or refreshed directly
+    if (typeof window !== 'undefined' && window.history) {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('ip', clean);
+        window.history.replaceState({}, '', url.toString());
+      } catch {}
+    }
+
     setArduinoIpState(clean);
+    setIsDemoState(false); // When an IP is given, immediately run live hardware mode
     consecutiveFailuresRef.current = 0;
     setConnectionState('connecting');
   }, []);
+
+  // Listen for browser navigation changes to the query param
+  useEffect(() => {
+    const onPopState = () => {
+      if (typeof window !== 'undefined' && window.location.search) {
+        const params = new URLSearchParams(window.location.search);
+        const urlIp = params.get('ip') || params.get('arduino') || params.get('host');
+        if (urlIp && urlIp.trim() && urlIp.trim() !== arduinoIp) {
+          setArduinoIp(urlIp.trim());
+        }
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [arduinoIp, setArduinoIp]);
 
   const setIsDemo = useCallback((demo: boolean) => {
     localStorage.setItem(LOCAL_STORAGE_DEMO_KEY, demo ? 'true' : 'false');
@@ -251,6 +368,7 @@ export function useWedge() {
     interpolatedAngle,
     isDemo,
     arduinoIp,
+    isHttps,
     isResetDisabled,
     isResetInFlight,
     slipAlertActive,

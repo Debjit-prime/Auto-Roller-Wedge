@@ -5,10 +5,17 @@ interface ConnectionPillProps {
   state: ConnectionState;
   ip: string;
   isDemo: boolean;
+  compact?: boolean;
   onOpenSettings?: () => void;
 }
 
-export const ConnectionPill: React.FC<ConnectionPillProps> = ({ state, ip, isDemo, onOpenSettings }) => {
+export const ConnectionPill: React.FC<ConnectionPillProps> = ({
+  state,
+  ip,
+  isDemo,
+  compact = false,
+  onOpenSettings,
+}) => {
   let dotColor = 'bg-[#8A9C98]';
   let badgeText = ip;
   let statusText = 'DISCONNECTED';
@@ -40,6 +47,28 @@ export const ConnectionPill: React.FC<ConnectionPillProps> = ({ state, ip, isDem
     containerBg = 'bg-[#FBEBEB]';
     textColor = 'text-[#C73A32]';
     pulse = true;
+  }
+
+  if (compact) {
+    return (
+      <button
+        type="button"
+        onClick={onOpenSettings}
+        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider border border-[#D9E1DC] ${containerBg} ${textColor} hover:brightness-95 transition-all cursor-pointer`}
+        title="Click to view network diagnostics"
+        aria-label={`Connection status: ${statusText}`}
+      >
+        <span className="relative flex h-2 w-2">
+          {pulse && (
+            <span
+              className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${dotColor}`}
+            />
+          )}
+          <span className={`relative inline-flex rounded-full h-2 w-2 ${dotColor}`} />
+        </span>
+        <span>{statusText}</span>
+      </button>
+    );
   }
 
   return (

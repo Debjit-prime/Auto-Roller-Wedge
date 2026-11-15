@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type { HistoryEntry, WedgeStatus } from '../lib/types';
 import { calculateMu } from '../lib/api';
+import { resolveArduinoIp, hasUrlProvidedIp } from '../lib/useWedge';
 
 describe('useWedge Logic, Duplicate Guard & 5-Reading History Window', () => {
   it('prevents duplicate history entries for the same continuous slip event', () => {
@@ -144,5 +145,41 @@ describe('useWedge Logic, Duplicate Guard & 5-Reading History Window', () => {
     // User erases all readings
     history = [];
     expect(history.length).toBe(0);
+  });
+
+  it('correctly resolves Arduino IP from URL search, hash, or localStorage', () => {
+    // 1. Query param ?ip=...
+    expect(resolveArduinoIp('?ip=10.62.117.48', '', null)).toBe('10.62.117.48');
+    expect(resolveArduinoIp('?arduino=192.168.1.100', '', null)).toBe('192.168.1.100');
+    expect(resolveArduinoIp('?host=10.0.0.5:8080', '', null)).toBe('10.0.0.5:8080');
+
+    // 2. Bare IP query ?10.62.117.48
+    expect(resolveArduinoIp('?10.62.117.48', '', null)).toBe('10.62.117.48');
+
+    // 3. Hash #10.62.117.48 or #ip=...
+    expect(resolveArduinoIp('', '#ip=10.62.117.48', null)).toBe('10.62.117.48');
+    expect(resolveArduinoIp('', '#10.62.117.48', null)).toBe('10.62.117.48');
+
+    // 4. Stored IP in localStorage
+    expect(resolveArduinoIp('', '', '192.168.1.250')).toBe('192.168.1.250');
+
+    // 5. Stale IP auto-migration to DEFAULT_IP
+    expect(resolveArduinoIp('', '', '10.62.117.177')).toBe('10.62.117.48');
+    expect(resolveArduinoIp('', '', '192.168.4.105')).toBe('10.62.117.48');
+
+    // 6. Default fallback
+    expect(resolveArduinoIp('', '', null)).toBe('10.62.117.48');
+  });
+
+  it('accurately identifies when an IP has been explicitly provided in the URL', () => {
+    expect(hasUrlProvidedIp('?ip=10.62.117.48', '')).toBe(true);
+    expect(hasUrlProvidedIp('?arduino=10.62.117.48', '')).toBe(true);
+    expect(hasUrlProvidedIp('?10.62.117.48', '')).toBe(true);
+    expect(hasUrlProvidedIp('', '#10.62.117.48')).toBe(true);
+    expect(hasUrlProvidedIp('', '#ip=10.62.117.48')).toBe(true);
+
+    expect(hasUrlProvidedIp('', '')).toBe(false);
+    expect(hasUrlProvidedIp('?demo=true', '')).toBe(false);
+    expect(hasUrlProvidedIp('', '#simulation')).toBe(false);
   });
 });

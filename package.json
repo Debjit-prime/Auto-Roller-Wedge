@@ -1,0 +1,22 @@
+{
+  "name": "auto-roller-wedge",
+  "version": "1.0.0",
+  "description": "Auto-Roller Wedge physics bench with Arduino UNO R4 WiFi & Real-Time React Telemetry",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "test": "npm --prefix web run test",
+    "preview": "npm --prefix web run preview"
+  },
+  "keywords": [
+    "physics",
+    "arduino",
+    "friction",
+    "angle-of-repose",
+    "react",
+    "vite"
+  ],
+  "author": "",
+  "license": "MIT"
+}

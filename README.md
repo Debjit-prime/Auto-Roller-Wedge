@@ -106,21 +106,42 @@ arduino-cli upload -p /dev/cu.usbmodem* --fqbn arduino:renesas_uno:unor4wifi fir
 
 ## Part B: Web Application Setup (`/web`)
 
-The web console is built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS**. It runs locally over plain `http://` to ensure that browsers do not block mixed-content requests when communicating with the Arduino's local HTTP server.
+The web console is built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS**. It can run locally or be hosted directly on **GitHub Pages**.
 
-### Installation & Launch
+### 1. Dynamic Arduino IP & Instant Connection
+The web app is designed to dynamically connect and run **immediately whenever an Arduino IP is given**:
+* **Via URL Query Parameter**: Append `?ip=<ARDUINO_IP>` to the URL (e.g. `http://localhost:5173/?ip=10.62.117.48` or `https://<username>.github.io/<repo>/?ip=10.62.117.48`). Also accepts `?arduino=...`, `?host=...`, `?10.62.117.48`, or `#10.62.117.48`. When an IP is present in the URL, the app immediately disables Demo mode, engages live polling, and starts streaming telemetry.
+* **Via TopBar Quick IP Input**: Enter or paste the IP into the dedicated `IP: [ 10.62.117.48 ] [ Connect & Run ]` field in the navigation bar.
+* **Via Disconnection Banner**: When disconnected, an inline quick-connect input appears directly on the screen for instant reconnection without opening any modals.
+* **Via Settings Modal**: Click the tune icon in the top right to adjust IP, polling parameters, and operational mode.
+
+### 2. Local Development & Launch
+From the repository root (or inside `/web`):
 ```bash
-cd web
+# Install dependencies
 npm install
+
+# Run unit tests (15 Vitest tests)
+npm test
+
+# Build production bundle
+npm run build
+
+# Start live dev server
 npm run dev
 ```
 Open your browser to `http://localhost:5173`.
 
-### Connecting to Hardware
-1. Click the **Settings (tune icon)** in the top bar.
-2. Enter the IP address shown in your Arduino Serial Monitor (e.g. `192.168.4.105`).
-3. Click **Save & Connect**.
-4. The connection pill will turn green (`LIVE`) and live telemetry will stream at 5 Hz.
+### 3. Deploying to GitHub & GitHub Pages
+* **Automated Deployment**: A GitHub Actions workflow (`.github/workflows/deploy.yml`) is included. Whenever you push to `main` or `master`, GitHub Actions automatically runs tests, builds the Vite application, and publishes the static artifacts to GitHub Pages.
+* **HTTPS Mixed-Content Note**: GitHub Pages is served over `https://`. Modern web browsers (Chrome, Edge, Brave, Safari) block HTTPS web pages from making direct HTTP fetch requests to local network devices like `http://10.62.117.48/status`.
+  * **2-Click Browser Permission (Chrome/Edge/Brave)**:
+    1. Click the site settings icon (tune/padlock icon immediately left of the address bar).
+    2. Click **Site settings**.
+    3. Change **Insecure content** from "Block" to **"Allow"**.
+    4. Reload the page. The app will immediately connect and stream telemetry from your Arduino!
+  * **1-Click Demo Simulator**: If viewing remotely without hardware, click **Demo Mode** to test the physics simulation offline.
+  * **Local Execution**: Clone the repository and run `npm run dev` to run over plain `http://` where mixed content restrictions do not apply.
 
 ---
 
